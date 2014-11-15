@@ -14,6 +14,8 @@ namespace CruiseShip
 
         private int numUniquePorts;
 
+        Dictionary<int, List<Route>> routesDict;
+
         /// <summary>
         /// A List of Routes available to a ship in this particular journey.
         /// </summary>
@@ -31,6 +33,26 @@ namespace CruiseShip
                 }
 
                 value = routes;
+            }
+        }
+
+        /// <summary>
+        /// A Dictionary of Routes available to a ship in this particular journey. Key: Port number, Value: Routes that start with this port.
+        /// </summary>
+        Dictionary<int, List<Route>> RoutesDict
+        {
+            get
+            {
+                return routesDict;
+            }
+            private set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("Invalid value for Routes. Value must not be null.");
+                }
+
+                value = routesDict;
             }
         }
 
