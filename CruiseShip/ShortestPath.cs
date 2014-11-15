@@ -42,44 +42,10 @@ namespace CruiseShip
                 }
             }
 
-            //routes.Sort();
-            //PrintRoutesList(routes);
-
             routes.Sort( (r1, r2) => r1.Fuel.CompareTo(r2.Fuel));
             PrintRoutesList(routes);
 
-            //Console.WriteLine("Smallest Fuel-tank needed: " + CalculateSmallestFuelTank(routes, NUM_OF_PORTS));
-
             Console.ReadKey();
-        }
-
-        /// <summary>
-        /// Takes a sorted list of Routes and returns the smallest fuel tank capacity
-        /// needed to visit every Port at least once. Ports can be visited multiple times
-        /// to 're-fill' the tank.
-        /// </summary>
-        /// <param name="routes"> A sorted list of Route objects. </param>
-        /// <param name="numPorts"> The amount of unique ports that can be visited. </param>
-        /// <returns> An int representing the smallest capacity the fuel tank needs to be. </returns>
-        private static int CalculateSmallestFuelTank(List<Route> routes, int numPorts)
-        {
-            // Keep track of unique visited ports.
-            HashSet<int> visitedPorts = new HashSet<int>();
-
-            foreach (Route r in routes)
-            {
-                visitedPorts.Add(r.PortA);
-                visitedPorts.Add(r.PortB);
-
-                // The last port to be visited will belong to the Route that
-                // contains the smallest possible fuel tank capacity.
-                if (visitedPorts.Count == numPorts)
-                {
-                    return r.Fuel;
-                }
-            }
-
-            return -1;
         }
 
         /// <summary>
@@ -91,6 +57,20 @@ namespace CruiseShip
             foreach (Route r in routes)
             {
                 Console.WriteLine(r);
+            }
+        }
+
+        /// <summary>
+        /// This method takes a Dictionary of integers that are connected to a List of Routes and prints them.
+        /// </summary>
+        /// <param name="d"> Dictionary of integers and Routes to be printed. </param>
+        public static void PrintRoutesDictionary(Dictionary<int, List<Route>> d)
+        {
+            foreach (KeyValuePair<int, List<Route>> entry in d)
+            {
+                Console.WriteLine("{0}: ", entry.Key);
+                PrintRoutesList(entry.Value);
+                Console.WriteLine("\n");
             }
         }
     }

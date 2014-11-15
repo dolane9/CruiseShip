@@ -222,31 +222,5 @@ namespace CruiseShip
 
             return routesDict;
         }
-
-        /// <summary>
-        /// This method takes a List of Route objects and prints them.
-        /// </summary>
-        /// <param name="routes"> List of Route objects to be printed. </param>
-        public static void PrintRoutesList(List<Route> routes)
-        {
-            foreach(Route r in routes)
-            {
-                Console.WriteLine(r);
-            }
-        }
-
-        /// <summary>
-        /// This method takes a Dictionary of integers that are connected to a List of Routes and prints them.
-        /// </summary>
-        /// <param name="d"> Dictionary of integers and Routes to be printed. </param>
-        public static void PrintRoutesDictionary(Dictionary<int, List<Route>> d)
-        {
-            foreach (KeyValuePair<int, List<Route>> entry in d)
-            {
-                Console.WriteLine("{0}: ", entry.Key);
-                PrintRoutesList(entry.Value);
-                Console.WriteLine("\n");
-            }
-        }
     }
 }
