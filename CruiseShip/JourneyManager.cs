@@ -102,6 +102,26 @@ namespace CruiseShip
             }
         }
 
+        /// <summary>
+        /// The amount of unique ports in this journey.
+        /// </summary>
+        int NumUniquePorts
+        {
+            get
+            {
+                return this.numUniquePorts;
+            }
+            private set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("Invalid value for NumUniquePorts. Value must not be null.");
+                }
+
+                value = this.numUniquePorts;
+            }
+        }
+
         #endregion Properties
 
         #region Methods
