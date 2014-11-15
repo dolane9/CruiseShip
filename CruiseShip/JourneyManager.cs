@@ -10,12 +10,16 @@ namespace CruiseShip
     {
         #region Fields
 
+        // List of Route objects. Each Route is avaible in this journey.
         private List<Route> routes;
 
+        // A HashSet of ints. Each int represents a port number avaible in this journey.
         private HashSet<int> uniquePorts;
 
+        // The number of unique ports in this journey.
         private int numUniquePorts;
 
+        // Dictionary: Key: A port number, Value: List of Route objects with a matching starting port and the key.
         private Dictionary<int, List<Route>> routesDict;
 
         #endregion Fields
@@ -45,7 +49,7 @@ namespace CruiseShip
         {
             get
             {
-                return routes;
+                return this.routes;
             }
             private set
             {
@@ -54,7 +58,27 @@ namespace CruiseShip
                     throw new ArgumentNullException("Invalid value for Routes. Value must not be null.");
                 }
 
-                value = routes;
+                value = this.routes;
+            }
+        }
+
+        /// <summary>
+        /// A HashSet of ints. Each in represents a port number avaible to this Journey.
+        /// </summary>
+        HashSet<int> UniquePorts
+        {
+            get
+            {
+                return this.uniquePorts;
+            }
+            private set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("Invalid value for UniquePorts. Value must not be null.");
+                }
+
+                value = this.uniquePorts;
             }
         }
 
@@ -65,7 +89,7 @@ namespace CruiseShip
         {
             get
             {
-                return routesDict;
+                return this.routesDict;
             }
             private set
             {
@@ -74,7 +98,7 @@ namespace CruiseShip
                     throw new ArgumentNullException("Invalid value for RoutesDict. Value must not be null.");
                 }
 
-                value = routesDict;
+                value = this.routesDict;
             }
         }
 
