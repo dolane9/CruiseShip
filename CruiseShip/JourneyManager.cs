@@ -247,6 +247,44 @@ namespace CruiseShip
             return routesDict;
         }
 
+        /// <summary>
+        /// This method updates the fields in this class used to keep information about the Route objects.
+        /// </summary>
+        /// <param name="route"> A Route object representing the Route that has been added to the List of Routes. </param>
+        private void UpdateJourneyStats(Route route)
+        {
+            // Add the two ports to the HashSet of ports.
+            this.UniquePorts.Add(route.PortA);
+            this.UniquePorts.Add(route.PortB);
+
+            // Update the number of unique ports (may stay the same)
+            this.NumUniquePorts = this.UniquePorts.Count();
+
+            // Add the route to the relevant Dictionary entry or create a new one if needed
+            this.AddRouteToDictionary(route);
+        }
+
+        /// <summary>
+        /// This method adds the Route supplied as an argument into the Dictionary in this class.
+        /// </summary>
+        /// <param name="r"> The Route to be added to the Dictionary. </param>
+        private void AddRouteToDictionary(Route r)
+        {
+            // Check if the Dictionary contains a key with this Routes' starting port
+            if (this.RoutesDict.ContainsKey(r.PortA))
+            {
+                // Dictionary contains this key, add route to the existing entry
+                List<Route> tempRoutes = this.RoutesDict[r.PortA];
+                tempRoutes.Add(r);
+                this.RoutesDict[r.PortA] = tempRoutes;
+            }
+            else
+            {
+                // Dictionary doesn't contain this key, add an entry for it
+                this.RoutesDict.Add(r.PortA, new List<Route>() { r });
+            }
+        }
+
         #endregion Methods
     }
 }
