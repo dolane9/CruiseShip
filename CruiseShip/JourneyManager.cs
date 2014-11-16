@@ -248,6 +248,54 @@ namespace CruiseShip
         }
 
         /// <summary>
+        /// This method will add a Route to the List of Routes (if it does not
+        /// already exist) and update the other data Fields.
+        /// </summary>
+        /// <param name="r"> The Route object to be added to this journey. </param>
+        /// <returns> True if the Route was added. Otherwise, false. </returns>
+        public bool AddRoute(Route r)
+        {
+            return this.AddRoute(r, true);
+        }
+
+        /// <summary>
+        /// This method will add a Route to the List of Routes (if it does not
+        /// already exist) and will NOT update the other data fields.
+        /// </summary>
+        /// <param name="r"> The Route object to be added to this journey. </param>
+        /// <returns> True if the Route was added. Otherwise, false. </returns>
+        public bool AddRouteWithoutUpdate(Route r)
+        {
+            return this.AddRoute(r, false);
+        }
+
+        /// <summary>
+        /// This method will add the Route supplied to the List of Route
+        /// objects and update the other data Fields accordingly.
+        /// </summary>
+        /// <param name="r"> The Route object to be added to this journey. </param>
+        /// <param name="update"> If true, call the UpdateJourneyStats() method. </param>
+        /// <returns> True if the Route was added. Otherwise, false. </returns>
+        public bool AddRoute(Route r, bool update)
+        {
+            // If the Route does not already exist then add the Route to List of Routes
+            if (!this.Routes.Contains(r))
+            {
+                this.Routes.Add(r);
+
+                // If the bool supplied is true then update the remaining data Fields
+                if (update)
+                {
+                    this.UpdateJourneyStats(r);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// This method updates the fields in this class used to keep information about the Route objects.
         /// </summary>
         /// <param name="route"> A Route object representing the Route that has been added to the List of Routes. </param>
