@@ -45,6 +45,9 @@ namespace CruiseShip
             routes.Sort( (r1, r2) => r1.Fuel.CompareTo(r2.Fuel));
             PrintRoutesList(routes);
 
+            JourneyManager jm = new JourneyManager(routes);
+            PrintRoutesDictionary(jm.RoutesDict);
+
             Console.ReadKey();
         }
 

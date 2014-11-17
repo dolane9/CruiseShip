@@ -45,7 +45,7 @@ namespace CruiseShip
         /// <summary>
         /// A List of Routes available to a ship in this particular journey.
         /// </summary>
-        List<Route> Routes
+        public List<Route> Routes
         {
             get
             {
@@ -65,7 +65,7 @@ namespace CruiseShip
         /// <summary>
         /// A HashSet of ints. Each in represents a port number avaible to this Journey.
         /// </summary>
-        HashSet<int> UniquePorts
+        public HashSet<int> UniquePorts
         {
             get
             {
@@ -85,7 +85,7 @@ namespace CruiseShip
         /// <summary>
         /// A Dictionary of Routes available to a ship in this particular journey. Key: Port number, Value: Routes that start with this port.
         /// </summary>
-        Dictionary<int, List<Route>> RoutesDict
+        public Dictionary<int, List<Route>> RoutesDict
         {
             get
             {
@@ -105,7 +105,7 @@ namespace CruiseShip
         /// <summary>
         /// The amount of unique ports in this journey.
         /// </summary>
-        int NumUniquePorts
+        public int NumUniquePorts
         {
             get
             {
@@ -113,9 +113,9 @@ namespace CruiseShip
             }
             private set
             {
-                if (value == null)
+                if (value < 1)
                 {
-                    throw new ArgumentNullException("Invalid value for NumUniquePorts. Value must not be null.");
+                    throw new ArgumentOutOfRangeException("Invalid value for NumUniquePorts. Value must be at least 1.");
                 }
 
                 value = this.numUniquePorts;
@@ -175,6 +175,15 @@ namespace CruiseShip
         public void SortListByFuel()
         {
             this.Routes.Sort((r1, r2) => r1.Fuel.CompareTo(r2.Fuel));
+        }
+
+        /// <summary>
+        /// Sorts the Dictionary data Field based on the amount of Routes
+        /// in the Value on each entry.
+        /// </summary>
+        public void SortDictByAmoutOfRoutesInValue()
+        {
+            // Consider changing the Dictionary to an OrderedDictionary
         }
         
         /// <summary>
@@ -249,17 +258,6 @@ namespace CruiseShip
 
         /// <summary>
         /// This method will add a Route to the List of Routes (if it does not
-        /// already exist) and update the other data Fields.
-        /// </summary>
-        /// <param name="r"> The Route object to be added to this journey. </param>
-        /// <returns> True if the Route was added. Otherwise, false. </returns>
-        public bool AddRoute(Route r)
-        {
-            return this.AddRoute(r, true);
-        }
-
-        /// <summary>
-        /// This method will add a Route to the List of Routes (if it does not
         /// already exist) and will NOT update the other data fields.
         /// </summary>
         /// <param name="r"> The Route object to be added to this journey. </param>
@@ -274,9 +272,9 @@ namespace CruiseShip
         /// objects and update the other data Fields accordingly.
         /// </summary>
         /// <param name="r"> The Route object to be added to this journey. </param>
-        /// <param name="update"> If true, call the UpdateJourneyStats() method. </param>
+        /// <param name="update"> If true, call the UpdateJourneyStats() method. Default value is true. </param>
         /// <returns> True if the Route was added. Otherwise, false. </returns>
-        public bool AddRoute(Route r, bool update)
+        public bool AddRoute(Route r, bool update = true)
         {
             // If the Route does not already exist then add the Route to List of Routes
             if (!this.Routes.Contains(r))
