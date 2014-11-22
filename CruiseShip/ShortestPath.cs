@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.IO;
 using System.Text;
@@ -51,6 +53,8 @@ namespace CruiseShip
             Console.ReadKey();
         }
 
+        #region Print Methods
+
         /// <summary>
         /// This method takes a List of Route objects and prints them.
         /// </summary>
@@ -67,14 +71,17 @@ namespace CruiseShip
         /// This method takes a Dictionary of integers that are connected to a List of Routes and prints them.
         /// </summary>
         /// <param name="d"> Dictionary of integers and Routes to be printed. </param>
-        public static void PrintRoutesDictionary(Dictionary<int, List<Route>> d)
+        public static void PrintRoutesDictionary(OrderedDictionary d)
         {
-            foreach (KeyValuePair<int, List<Route>> entry in d)
+            IDictionaryEnumerator e = d.GetEnumerator();
+            while (e.MoveNext())
             {
-                Console.WriteLine("{0}: ", entry.Key);
-                PrintRoutesList(entry.Value);
-                Console.WriteLine("\n");
+                Console.WriteLine("Start: {0}", e.Key);
+                PrintRoutesList(e.Value as List<Route>);
+                Console.WriteLine();
             }
         }
+
+        #endregion Print Methods
     }
 }

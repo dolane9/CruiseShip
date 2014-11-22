@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace CruiseShip
         private int numUniquePorts;
 
         // Dictionary: Key: A port number, Value: List of Route objects with a matching starting port and the key.
-        private Dictionary<int, List<Route>> routesDict;
+        private OrderedDictionary routesDict;
 
         #endregion Fields
 
@@ -33,6 +34,7 @@ namespace CruiseShip
         public JourneyManager(List<Route> routes)
         {
             this.Routes = routes;
+            this.routes = routes;
             this.uniquePorts = this.GetUniquePorts();
             this.numUniquePorts = uniquePorts.Count();
             this.routesDict = this.CreateRoutesDictionary();
@@ -85,7 +87,7 @@ namespace CruiseShip
         /// <summary>
         /// A Dictionary of Routes available to a ship in this particular journey. Key: Port number, Value: Routes that start with this port.
         /// </summary>
-        public Dictionary<int, List<Route>> RoutesDict
+        public OrderedDictionary RoutesDict
         {
             get
             {
@@ -232,17 +234,17 @@ namespace CruiseShip
         /// starting port and a list of Routes that contain this starting port.
         /// </summary>
         /// <returns> A Dictionary containing A List of Routes based on their starting port. </returns>
-        private Dictionary<int, List<Route>> CreateRoutesDictionary()
+        private OrderedDictionary CreateRoutesDictionary()
         {
-            Dictionary<int, List<Route>> routesDict = new Dictionary<int, List<Route>>();
+            OrderedDictionary routesDict = new OrderedDictionary();
 
             // Create one entry in the Dictionary for each starting port (For each different PortA value)
             foreach (Route r in this.Routes)
             {
-                if (routesDict.ContainsKey(r.PortA))
+                if (routesDict.Contains(r.PortA))
                 {
                     // An entry with this starting point exists. Add the Route to this entry.
-                    List<Route> routesList = routesDict[r.PortA];
+                    List<Route> routesList = routesDict[r.PortA] as List<Route>;
                     routesList.Add(r);
                     routesDict[r.PortA] = routesList;
                 }
@@ -317,10 +319,10 @@ namespace CruiseShip
         private void AddRouteToDictionary(Route r)
         {
             // Check if the Dictionary contains a key with this Routes' starting port
-            if (this.RoutesDict.ContainsKey(r.PortA))
+            if (this.RoutesDict.Contains(r.PortA))
             {
                 // Dictionary contains this key, add route to the existing entry
-                List<Route> tempRoutes = this.RoutesDict[r.PortA];
+                List<Route> tempRoutes = this.RoutesDict[r.PortA] as List<Route>;
                 tempRoutes.Add(r);
                 this.RoutesDict[r.PortA] = tempRoutes;
             }
