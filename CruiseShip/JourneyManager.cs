@@ -179,6 +179,11 @@ namespace CruiseShip
             this.Routes.Sort((r1, r2) => r1.Fuel.CompareTo(r2.Fuel));
         }
 
+        public void SortDictionaryByKey()
+        {
+
+        }
+
         /// <summary>
         /// Sorts the Dictionary data Field based on the amount of Routes
         /// in the Value on each entry.
@@ -238,22 +243,43 @@ namespace CruiseShip
         {
             OrderedDictionary routesDict = new OrderedDictionary();
 
+            Console.WriteLine("\n");
+            foreach (Route r in this.Routes)
+            {
+                Console.WriteLine(r);
+            }
+            Console.WriteLine("\n");
+
             // Create one entry in the Dictionary for each starting port (For each different PortA value)
             foreach (Route r in this.Routes)
             {
+                Console.WriteLine(r);
                 if (routesDict.Contains(r.PortA))
                 {
+                    Console.WriteLine("Inside contains: " + r.PortA);
+
                     // An entry with this starting point exists. Add the Route to this entry.
+                    /* Problem
+                     * When using dict[key] with an OrderedDictionary it does a lookup based
+                     * on the key. But if the key is an int, it thinks it's a lookup based on index.
+                     * 
+                     * Solution using Dictionary: dict = dict.OrderBy(x => x.Value.Count).ToDictionary(x => x.Key, x => x.Value);
+                     */
                     List<Route> routesList = routesDict[r.PortA] as List<Route>;
                     routesList.Add(r);
                     routesDict[r.PortA] = routesList;
+                    Console.WriteLine("Added to: " + r.PortA);
                 }
                 else
                 {
+                    Console.WriteLine("Inside else: (first time being added) " + r.PortA);
+
                     // There is no entry with this starting point. Create one.
                     routesDict.Add(r.PortA, new List<Route>() { r });
                 }
+                Console.WriteLine("\n");
             }
+            Console.WriteLine("\n");
 
             return routesDict;
         }

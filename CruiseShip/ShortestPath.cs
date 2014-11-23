@@ -37,16 +37,23 @@ namespace CruiseShip
                 NUM_OF_PORTS = int.Parse(bits[0]);
                 NUM_OF_ROUTES = int.Parse(bits[1]);
 
-                while ((line = reader.ReadLine()) != null)
+                line = reader.ReadLine();
+                while (line != null && line != string.Empty)
                 {
                     bits = line.Split(' ');
                     routes.Add(new Route(int.Parse(bits[0]), int.Parse(bits[1]), int.Parse(bits[2])));
+                    line = reader.ReadLine();
                 }
             }
 
-            routes.Sort( (r1, r2) => r1.Fuel.CompareTo(r2.Fuel));
+            //routes.Sort( (r1, r2) => r1.Fuel.CompareTo(r2.Fuel));
             PrintRoutesList(routes);
 
+            /* Problem
+             * Sort List and then add it to the JM. This means the route starting with 4 is added second.
+             * For some reason the routes starting with 1 (not including the very first route) get added
+             * to the key 4 in the dictionary (should be added to key 1)
+             */
             JourneyManager jm = new JourneyManager(routes);
             PrintRoutesDictionary(jm.RoutesDict);
 
